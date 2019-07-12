@@ -26,6 +26,19 @@ class Token
      */
     private $expiresAt;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="tokens", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    public function __construct(User $user)
+    {
+        $this->token = bin2hex(random_bytes(60));
+        $this->user = $user;
+        $this->expiresAt = new \DateTime('+1 hour');
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -53,5 +66,10 @@ class Token
         $this->expiresAt = $expiresAt;
 
         return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
     }
 }

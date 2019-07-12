@@ -49,9 +49,11 @@
                                 </div>
                                 <!--/ end of modal -->
 
-                                <a href="{{ path('task_edit', {'id': task.id}) }}" class="btn btn-sm btn-outline-warning float-right mr-1">
-                                    <i class="fas fa-pencil-alt"></i>
-                                </a>
+                                {% if not task.isDone %}
+                                    <a href="{{ path('task_edit', {'id': task.id}) }}" class="btn btn-sm btn-outline-warning float-right mr-1">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </a>
+                                {% endif %}
                                 {% if task.isDone %}
                                     <button class="btn btn-sm btn-success ml-2">
                                         <i class="fas fa-check-circle"></i>

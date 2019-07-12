@@ -1,13 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Félicitation{% endblock %}
-
+{% block title %}demande expirée{% endblock %}
 {% block body %}
     <div class="container" style="margin-top: 100px; margin-bottom: 100px;">
         <div class="row">
             <div class="col-12">
-                <h1 class="h3 mb-3 font-weight-normal">Félicitation!</h1>
-                <p>Vous pouvez vous connectez en cliquand <a href="{{ path('app_login') }}">Ici</a>.</p>
+                <h1>Votre demande a expiré</h1>
+                <p><a href="{{ path('password_reset') }}">Faire une autre demande</a></p>
             </div>
         </div>
     </div>
