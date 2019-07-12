@@ -22,8 +22,6 @@ class RegistrationType extends AbstractType
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'les deux mots de passe doivent correspondre.',
-                'required' => true,
-                'mapped' => false,
                 'first_options' => [
                     'label' => 'Mot de passe: ',
                     'help' => 'minimum 6 lettres et 1 chiffre.'

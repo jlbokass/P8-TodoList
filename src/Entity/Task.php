@@ -63,6 +63,11 @@ class Task
      */
     private $isDone;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $updatedAp;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -125,5 +130,17 @@ class Task
     public function toggle($flag)
     {
         $this->isDone = $flag;
+    }
+
+    public function getUpdatedAp(): ?\DateTimeInterface
+    {
+        return $this->updatedAp;
+    }
+
+    public function setUpdatedAp(\DateTimeInterface $updatedAp): self
+    {
+        $this->updatedAp = $updatedAp;
+
+        return $this;
     }
 }
