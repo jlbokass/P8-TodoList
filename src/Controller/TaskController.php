@@ -88,6 +88,8 @@ class TaskController extends AbstractController
      */
     public function edit(Task $task, Request $request): Response
     {
+        $this->denyAccessUnlessGranted('EDIT', $task);
+
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
@@ -118,6 +120,8 @@ class TaskController extends AbstractController
      */
     public function toggleTask(Task $task): Response
     {
+        $this->denyAccessUnlessGranted('TOGGLE', $task);
+
         $task->toggle(!$task->getIsDone());
         $this->manager->flush();
 
@@ -139,6 +143,8 @@ class TaskController extends AbstractController
      */
     public function delete(Task $task): Response
     {
+        $this->denyAccessUnlessGranted('DELETE', $task);
+
         $this->manager->remove($task);
         $this->manager->flush();
 
