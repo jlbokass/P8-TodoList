@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier votre profile{% endblock %}
+
+{% block body %}
+    <div class="container" style="margin-top: 100px; margin-bottom: 100px">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="h3 mb-3 font-weight-normal">Modifier votre profile</h1>
+                        {% include 'profile/profileForm.html.twig' %}
+                        <button type="submit" class="btn btn-md btn-warning">Modifier</button>
+                        <a href="{{ path('profile_show') }}" class="btn btn-info">Annulez</a>
+                        {{ form_end(userForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

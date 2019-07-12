@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Task;
 use App\Form\TaskType;
 use App\Repository\TaskRepository;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +22,7 @@ class TaskController extends AbstractController
     }
 
     /**
-     * @Route("/tasks", name="task_list")
+     * @Route("/tasks", name="task_list", methods={"GET"})
      *
      * @param TaskRepository $taskRepository
      *
@@ -29,8 +30,9 @@ class TaskController extends AbstractController
      */
     public function index(TaskRepository $taskRepository): Response
     {
+
         return $this->render('task/index.html.twig', [
-            'tasks' => $taskRepository->findAll()
+            'tasks' => $taskRepository->findAll(),
         ]);
     }
 
@@ -62,7 +64,7 @@ class TaskController extends AbstractController
 
         return $this->render(
             'task/create.html.twig', [
-                'form' => $form->createView()
+                'taskForm' => $form->createView()
             ]
         );
     }
@@ -91,6 +93,10 @@ class TaskController extends AbstractController
 
             return $this->redirectToRoute('task_list');
         }
+
+        return $this->render('task/edit.html.twig', [
+            'taskForm' => $form->createView()
+        ]);
     }
 
     /**
@@ -105,7 +111,7 @@ class TaskController extends AbstractController
         $task->toggle(!$task->getIsDone());
         $this->manager->flush();
 
-        $name = $task->getTitle();
+        $name = $task->getName();
 
         $this->addFlash(
             'success',

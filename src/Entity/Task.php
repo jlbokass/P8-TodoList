@@ -3,9 +3,17 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TaskRepository")
+ *
+ * @UniqueEntity(
+ *     fields={"name"},
+ *     errorPath="name",
+ *     message="This name already exist"
+ * )
  */
 class Task
 {
@@ -17,17 +25,36 @@ class Task
     private $id;
 
     /**
+     * @ORM\Column(type="string", length=100)
+     *
+     * @Assert\NotBlank(message= " The name cannot be null ")
+     * @Assert\Length(
+     *     min = 3,
+     *     max = 30,
+     *     minMessage="The name must be at least {{ limit }} characters long",
+     *     maxMessage="The name cannot be longer than {{ limit }} characters"
+     * )
+     *
+     * @Assert\Type("string")
+     */
+    private $name;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
     /**
-     * @ORM\Column(type="string", length=100)
-     */
-    private $title;
-
-    /**
      * @ORM\Column(type="text")
+     *
+     * @Assert\NotBlank(message= " The content cannot be null ")
+     * @Assert\Length(
+     *     min = 10,
+     *     max = 400,
+     *     minMessage="The content must be at least {{ limit }} characters long",
+     *     maxMessage="The content cannot be longer than {{ limit }} characters"
+     * )
+     * @Assert\Type("string")
      */
     private $content;
 
@@ -59,14 +86,14 @@ class Task
         return $this;
     }
 
-    public function getTitle(): ?string
+    public function getName(): ?string
     {
-        return $this->title;
+        return $this->name;
     }
 
-    public function setTitle(string $title): self
+    public function setName(string $name): self
     {
-        $this->title = $title;
+        $this->name = $name;
 
         return $this;
     }
