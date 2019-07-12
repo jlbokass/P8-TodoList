@@ -4,9 +4,14 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ *
+ *  @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ *  @UniqueEntity(fields={"username"}, message="There is already an account with this username")
  */
 class User implements UserInterface
 {
@@ -19,6 +24,12 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     *
+     * @Assert\NotBlank(message="Email cannot be null")
+     * @Assert\Email(
+     *     message="The email '{{ value }}' is not a valid email",
+     *     checkMX= true
+     * )
      */
     private $email;
 
@@ -30,11 +41,40 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     *
+     * @Assert\NotBlank(
+     *     message="The password cannot be null"
+     * )
+     * @Assert\Length(
+     *     min="6",
+     *     max="12",
+     *     minMessage="The password must be at least {{ limit }} characters long",
+     *     maxMessage="The password cannot be longer than {{ limit }} characters"
+     * )
+     *
+     * @Assert\Regex(pattern="*[a-z]+.*",
+     *     match=true,
+     *     message="Password needs at least one letter")
+     *
+     * @Assert\Regex(pattern="*\d+.*",
+     *     match=true,
+     *     message="Password needs at least one number")
      */
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, unique=true)
+     *
+     * @Assert\NotBlank(
+     *     message="The username cannot be null"
+     * )
+     *
+     * @Assert\Length(
+     *     min="3",
+     *     max="12",
+     *     minMessage="The username must be at least {{ limit }} characters long",
+     *     maxMessage="The username cannot be longer than {{ limit }} characters"
+     * )
      */
     private $username;
 

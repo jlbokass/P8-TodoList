@@ -1,11 +1,15 @@
 {% extends 'base.html.twig' %}
-
+{% block title %}Créez une tâche{% endblock %}
 {% block body %}
-    <div class="row">
-        {{ form_start(form, {'action' : path('task_edit', { 'id' : task.id })}) }}
-            {{ form_widget(form) }}
-
-            <button type="submit" class="btn btn-success pull-right">Modifier</button>
-        {{ form_end(form) }}
+    <div class="container" style="margin-top: 100px; margin-bottom: 100px">
+        <h1 class="text-center">Modifier la tâche</h1>
+        <div class="row">
+            <div class="col-12">
+                {% include 'task/taskForm.html.twig' %}
+                <button type="submit" class="btn btn-success">Modifiez</button>
+                <a href="{{ path('task_list') }}" class="btn btn-info">Annulez</a>
+                {{ form_end(taskForm) }}
+            </div>
+        </div>
     </div>
 {% endblock %}
