@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Erreur{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -13,8 +13,8 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-12">
-                        <h1 class="h3 mb-3 font-weight-normal">Already registered</h1>
-                        <p>You can log in <a href="{{ path('app_login') }}">Here</a></p>
+                        <h1 class="h3 mb-3 font-weight-normal">Vous êtes déjà enregistré</h1>
+                        <p>Vous pouvez vous connecter en cliquand <a href="{{ path('app_login') }}">Ici</a>.</p>
                     </div>
                 </div>
             </div>

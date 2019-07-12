@@ -101,7 +101,8 @@ class User implements UserInterface
     private $tokens;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="user", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="user", orphanRemoval=true, cascade={"remove"}, fetch="EXTRA_LAZY")
+     * @ORM\OrderBy({"createdAt" = "DESC"})
      */
     private $tasks;
 

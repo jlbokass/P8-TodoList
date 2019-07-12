@@ -5,13 +5,19 @@ namespace App\Controller;
 use App\Entity\Task;
 use App\Form\TaskType;
 use App\Repository\TaskRepository;
-use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class TaskController
+ * @package App\Controller
+ *
+ * @IsGranted("ROLE_USER")
+ */
 class TaskController extends AbstractController
 {
     public $manager;
@@ -50,6 +56,10 @@ class TaskController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $user = $this->getUser();
+
+            $task->setUser($user);
 
             $this->manager->persist($task);
             $this->manager->flush();

@@ -39,9 +39,8 @@ class RegisterController extends AbstractController
             $user->setPassword($passwordEncoder->encodePassword(
                 $user,
                 $form->get('password')->getData()
-            //$user->getPassword()
-            )
-            );
+            ))
+            ;
             $user->setRoles(['ROLE_USER']);
             $token = new Token($user);
             $sender->sendToken($user, $token);
