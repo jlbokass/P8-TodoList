@@ -8,7 +8,6 @@ use App\Form\RegistrationType;
 use App\Repository\TokenRepository;
 use App\Services\TokenSender;
 use Doctrine\ORM\EntityManagerInterface;
-use PhpParser\Node\Scalar\String_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -53,7 +52,7 @@ class RegisterController extends AbstractController
                 'success',
                 'Please check your email'
             );
-            return $this->redirectToRoute('app_homepage');
+            return $this->redirectToRoute('homepage');
         }
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),

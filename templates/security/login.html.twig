@@ -36,10 +36,10 @@
         </div>
     </form>
 
-    <p class="form-signin">Perte du mot de passe?<a href="#"> Cliquez ici!</a></p>
+    <p class="form-signin">Perte du mot de passe?<a href="{{ path('password_reset') }}"> Cliquez ici!</a></p>
     <div class="form-signin">
         <div class="card">
-            <div class="card-body">Vous n'avez pas encore de compte? <a href="{{ path('user_create') }}">Inscrivez vous!</a></div>
+            <div class="card-body">Vous n'avez pas encore de compte? <a href="{{ path('app_register') }}">Inscrivez vous!</a></div>
         </div>
     </div>
 {% endblock %}
