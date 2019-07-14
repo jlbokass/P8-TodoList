@@ -81,7 +81,8 @@ class PasswordController extends AbstractController
         TokenRepository $repository,
         Request $request,
         UserPasswordEncoderInterface $passwordEncoder
-    ): Response {
+    ): Response
+    {
         $token = $repository->findOneBy(['token' => $token]);
 
         if (!$token->getExpiresAt()) {
