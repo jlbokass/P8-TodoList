@@ -4,7 +4,7 @@ namespace App\Tests;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class RegisterControllerTest extends WebTestCase
+class PasswordControllerTest extends WebTestCase
 {
     public function testSomething()
     {
