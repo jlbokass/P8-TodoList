@@ -34,10 +34,10 @@
         <ul class="navbar-nav ml-auto">
             {% if app.user is null %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_login') }}">Sign In</a>
+                    <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_register') }}">Sign Up</a>
+                    <a class="nav-link" href="{{ path('app_register') }}">Inscription</a>
                 </li>
             {% endif %}
             {% if is_granted('ROLE_USER') %}
