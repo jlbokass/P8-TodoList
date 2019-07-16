@@ -22,7 +22,7 @@ class ResetPasswordSender
 
     public function sendToken(User $user, Token $token)
     {
-        $message = (new \Swift_Message('Snowtrick reset password'))
+        $message = (new \Swift_Message('Todo-List reset password'))
             ->setFrom('contact@snowtrick.com')
             ->setTo($user->getEmail())
             ->setBody(
