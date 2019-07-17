@@ -1,5 +1,7 @@
 # Welcome to my Todo-list application
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8cd9f8588d2d4630a5f39c7bd5eee274)](https://app.codacy.com/app/jlbokass/P8-TodoList?utm_source=github.com&utm_medium=referral&utm_content=jlbokass/P8-TodoList&utm_campaign=Badge_Grade_Dashboard)
+
 In this project, i build a responsive todo-list app with symfony 4.3 and php 7.2. 
 
 This work is done as part of my PHP web developer training with Openclassroom - project 8.
