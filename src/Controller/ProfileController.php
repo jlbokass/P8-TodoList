@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\ProfileType;
+use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,16 +49,41 @@ class ProfileController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $this->getDoctrine()->getManager()->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
 
             $this->addFlash('success', "L'utilisateur a bien été modifié");
 
             return $this->redirectToRoute('profile_show');
         }
 
+        $em = $this->getDoctrine()->getManager();
+        $em->refresh($user);
+
         return $this->render('profile/edit.html.twig', [
             'profileForm' => $form->createView(),
             'user' => $user
         ]);
+    }
+
+    /**
+     * @Route("/profile/delete/{id}", name="delete_profile")
+     *
+     */
+    public function deleteProfile(User $user, EntityManagerInterface $entityManager)
+    {
+        $entityManager->remove($user);
+        $entityManager->flush();
+        return $this->redirectToRoute('homepage');
+    }
+
+    /**
+     * @Route("/profile/request/delete", name="profile_request_delete")
+     *
+     * @return Response
+     */
+    public function requestDeleteProfile(): Response
+    {
+        return $this->render('profile/requestDeleteProfile.html.twig');
     }
 }

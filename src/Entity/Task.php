@@ -69,7 +69,7 @@ class Task
     private $updatedAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="tasks")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="tasks", cascade={"remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;

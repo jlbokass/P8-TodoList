@@ -6,13 +6,19 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class DefaultControllerTest extends WebTestCase
 {
-    public function testHomepageIsUp()
+    private $client;
+
+    public function setUp(): void
     {
-        $client = static::createClient();
-        $client->request('GET', '/');
+        parent::setUp();
+        $this->client = static::createClient();
+    }
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    public function testTextOnPage()
+    {
+        $crawler= $this->client->request('GET', '/');
 
-        echo $client->getResponse()->getContent();
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
+        $this->assertSame('BIENVENUE SUR TODO-LIST', $crawler->filter('h1')->text());
     }
 }

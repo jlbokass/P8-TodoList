@@ -5,8 +5,9 @@
     <div class="container" style="margin-top: 100px; margin-bottom: 100px;">
         <div class="row">
             <div class="col-12">
-                <h1>Vérification votre email</h1>
-                <p>Merci vérifier vos email. <strong class="text-danger">Attention, votre demande est valable 1h.</strong></p>
+                <h1>Suppression profile</h1>
+                <p><strong class="text-danger">Attention, vous serez supprimez de notre base de données!.</strong></p>
+                <a href="{{ path('delete_profile', {'id': app.user.id}) }}" class="btn btn-danger">Confirmer</a>
             </div>
         </div>
     </div>

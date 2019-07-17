@@ -3,7 +3,7 @@ security:
     App\Entity\User:
         #algorithm: argon2i
          algorithm: bcrypt
-         cost: 13
+         #cost: 12
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
   providers:
