@@ -1,16 +1,24 @@
 <?php
 
-namespace Tests\AppBundle\Controller;
+namespace App\Tests;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class DefaultControllerTest extends WebTestCase
 {
-    public function testIndex()
-    {
-        $client = static::createClient();
-        $client->request('GET', '/');
+    private $client;
 
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->client = static::createClient();
+    }
+
+    public function testTextOnPage()
+    {
+        $crawler= $this->client->request('GET', '/');
+
+        $this->assertSame(200, $this->client->getResponse()->getStatusCode());
+        $this->assertSame('BIENVENUE SUR TODO-LIST', $crawler->filter('h1')->text());
     }
 }

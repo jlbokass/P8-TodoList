@@ -2,6 +2,22 @@
 
 {% block title %}Home{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/log.css') }}">
+{% endblock %}
+
 {% block body %}
     <div class="bg"></div>
+    <div class="text-center" style="position: absolute;top: 50%; left: 50%; transform: translate(-50%, -50%)">
+        <h1 class="text-light display-4">BIENVENUE SUR TODO-LIST</h1>
+        <p class="text-light" style="font-size: 1.5em">L'application vous permettant de gérer l'ensemble de vos tâches sans éffort! </p>
+        <a href="{{ path('app_register') }}" class="btn btn-lg btn-light mr-3">
+            Inscription
+        </a>
+        <a href="{{ path('app_login') }}" class="btn btn-lg btn-dark">
+            Connexion
+        </a>
+        <p class="mt-3 rounded" style="font-size: 1.3em"><a href="" class="text-warning">Voir une DEMO de l'application!</a></p>
+    </div>
 {% endblock %}

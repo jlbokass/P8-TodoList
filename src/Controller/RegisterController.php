@@ -47,11 +47,8 @@ class RegisterController extends AbstractController
             $manager->persist($user);
             $manager->persist($token);
             $manager->flush();
-            $this->addFlash(
-                'success',
-                'Please check your email'
-            );
-            return $this->redirectToRoute('homepage');
+
+            return $this->render('registration/request.html.twig');
         }
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
