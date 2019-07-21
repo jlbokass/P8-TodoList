@@ -36,9 +36,11 @@ class TaskController extends AbstractController
      */
     public function index(TaskRepository $taskRepository): Response
     {
+        $tasks = $taskRepository->findAll();
+        // $this->denyAccessUnlessGranted('LIST', $tasks);
 
         return $this->render('task/index.html.twig', [
-            'tasks' => $taskRepository->findAll(),
+            'tasks' => $tasks,
         ]);
     }
 
@@ -66,7 +68,7 @@ class TaskController extends AbstractController
 
             $this->addFlash(
                 'success',
-                'La tâche à bien été ajouté. '
+                'La tâche à bien été ajoutée. '
             );
 
             return $this->redirectToRoute('task_list');

@@ -1,38 +1,73 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin.html.twig' %}
 
-{% block header_img %}{% endblock %}
+{% block manager_name %}
+    <div>
+        {% for type, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ type }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+    Manage user
+{% endblock %}
 
-{% block header_title %}<h1>Liste des utilisateurs</h1>{% endblock %}
+{% block add %}
+    <a href="" class="bg-success p-2 rounded text-light">Add a user</a>
+{% endblock %}
 
-{% block body %}
-    {% if users|length == 0 %}
-        <div class="alert alert-warning" role="alert">
-            Il n'y a pas encore d'utilisateur enregistré. <a href="{{ path('user_create') }}" class="btn btn-warning pull-right">Créer un utilisateur</a>
-        </div>
+{% block entity_title %}
+    Id
+{% endblock %}
+
+{% block var1 %}
+    Email
+{% endblock %}
+
+{% block main_content %}
+    {% for user in users %}
+        <tr>
+            <td>
+                <a href="">
+                    {{ user.id }}
+                </a>
+            </td>
+            <td>
+                {{ user.username }}
+            </td>
+            <td style="width: 20%">
+                {{ user.email }}
+            </td>
+            <td>
+                {{ user.roles[0] }}
+            </td>
+            <td>
+                <!-- Example sin!-e danger button -->
+                <div class="btn-group">
+                    <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Rôle
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{{ path('change_user_role', {'id': user.id}) }}">Admin</a>
+                        <a class="dropdown-item" href="#">User</a>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <button type="button" class="btn btn-danger">
+                    Supprimer
+                </button>
+            </td>
+        </tr>
     {% else %}
-        <div class="row">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Nom d'utilisateur</th>
-                    <th>Adresse d'utilisateur</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for user in users %}
-                    <tr>
-                        <th scope="row">{{ loop.index }}</th>
-                        <td>{{ user.username }}</td>
-                        <td>{{ user.email }}</td>
-                        <td>
-                            <a href="{{ path('user_edit', {'id' : user.id}) }}" class="btn btn-success btn-sm">Edit</a>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    {% endif %}
+        <tr>
+            <td colspan="4" class="text-center">
+                No articles found
+            </td>
+        </tr>
+    {% endfor %}
 {% endblock %}

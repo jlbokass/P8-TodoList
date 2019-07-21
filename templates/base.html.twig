@@ -50,7 +50,7 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         {% if is_granted('ROLE_ADMIN') %}
-                            <a class="dropdown-item" href="#">Admin</a>
+                            <a class="dropdown-item" href="{{ path('user_list') }}">Admin</a>
                         {% endif %}
                         <a class="dropdown-item" href="{{ path('profile_show') }}">profile</a>
                         <a class="dropdown-item" href="{{ path('app_logout') }}">logout</a>

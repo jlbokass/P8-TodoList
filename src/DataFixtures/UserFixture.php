@@ -10,16 +10,6 @@ class UserFixture extends BaseFixture
 {
     private $encoder;
 
-    private static $username = [
-        'jlbokass',
-        'john'
-        ];
-
-    private static $email = [
-        'test1@gmail.com',
-        'test2@gmail.com'
-    ];
-
     public function __construct(UserPasswordEncoderInterface $encoder)
     {
         $this->encoder = $encoder;
