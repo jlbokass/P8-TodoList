@@ -11,6 +11,6 @@ class UserControllerTest extends WebTestCase
         $client = static::createClient();
         $crawler = $client->request('GET', '/users');
 
-        $this->assertSelectorTextContains('h1', 'Manage user');
+        $this->assertSelectorTextContains('h1', 'Manage users');
     }
 }
