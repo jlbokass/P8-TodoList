@@ -16,6 +16,13 @@ class TaskTest extends TestCase
         $this->task = new Task();
     }
 
+    public function testSettingId()
+    {
+        $this->task->getId();
+
+        $this->assertEquals(null, $this->task->getId());
+    }
+
     public function testSettingName()
     {
         $this->task->setName('task');
@@ -44,6 +51,7 @@ class TaskTest extends TestCase
 
     public function testSettingIsDone()
     {
+        $this->assertFalse($this->task->getIsDone());
         $this->task->setIsDone(true);
         $this->assertTrue(true);
     }

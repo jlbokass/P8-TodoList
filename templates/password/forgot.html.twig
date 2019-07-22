@@ -10,6 +10,18 @@
 {% block body %}
     <form method="post" class="form-signin mt-5">
         <div class="card">
+            <div class="card-header">
+                {% for type, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ type }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
             <div class="card-body">
                 <h1 class="h3 mb-3 font-weight-normal text-center">Réinitialisez</h1>
                 {{ form_start(emailToResetPassword, {'attr': {

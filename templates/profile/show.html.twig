@@ -14,7 +14,7 @@
                             <li><p><strong>Username: </strong>{{ app.user.username }}</p></li>
                             <li><p><strong>Email: </strong>{{ app.user.email }}</p></li>
                             <li class="mt-5 mb-1"><a href="{{ path('profile_edit', {'id': app.user.id}) }}" class="btn btn-warning">Editer votre profil</a></li>
-                            <li><a href="{{ path('profile_request_delete') }}" class="btn btn-danger">Supprimer votre profil</a></li>
+                            <li><a href="{{ path('delete_profile', {'userId': app.user.id}) }}" class="btn btn-danger">Supprimer votre profil</a></li>
                         </ul>
                     </div>
                 </div>

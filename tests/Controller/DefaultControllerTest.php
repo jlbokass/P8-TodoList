@@ -22,11 +22,11 @@ class DefaultControllerTest extends WebTestCase
 
         $crawler = $this->client->request('GET', '/');
 
-        self::assertContains('/registration', $crawler->filter('a')->extract(['href']));
+        self::assertContainS('/registration', $crawler->filter('a')->extract(['href']));
         $link = $crawler->selectLink('Inscription')->link();
         $crawler = $this->client->click($link);
 
-        self::assertContains('Inscription', $crawler->filter('h1')->html());
+        self::assertStringContainsString('Inscription', $crawler->filter('h1')->html());
     }
 
     public function testClickButtonConnexion()
@@ -38,7 +38,7 @@ class DefaultControllerTest extends WebTestCase
         $link = $crawler->selectLink('Connexion')->link();
         $crawler = $this->client->click($link);
 
-        self::assertContains('Connexion', $crawler->filter('h1')->html());
+        self::assertStringContainsString('Connexion', $crawler->filter('h1')->html());
     }
 
     public function testTextOnPage()

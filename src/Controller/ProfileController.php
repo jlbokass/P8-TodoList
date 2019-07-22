@@ -111,13 +111,13 @@ class ProfileController extends AbstractController
         ]);
     }
 
-        /**
-         * @Route("/profile/request/delete", name="profile_request_delete")
-         *
-         * @return Response
-         */
-        public function requestDeleteUser(): Response
+    /**
+     * @Route("/profile/request/delete", name="profile_request_delete")
+     *
+     * @return Response
+     */
+    public function requestDeleteUser(): Response
     {
         return $this->render('profile/requestDeleteProfile.html.twig');
     }
-    }
+}

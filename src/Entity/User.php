@@ -181,7 +181,7 @@ class User implements UserInterface
      */
     public function getSalt()
     {
-        // not needed when using the "bcrypt" algorithm in security.yaml
+        return null;
     }
 
     /**
@@ -189,8 +189,7 @@ class User implements UserInterface
      */
     public function eraseCredentials()
     {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        return null;
     }
 
     public function setUsername(string $username): self
@@ -238,12 +237,20 @@ class User implements UserInterface
 
     /**
      * @return Collection|Token[]
+     *
+     * @codeCoverageIgnore
      */
     public function getTokens(): Collection
     {
         return $this->tokens;
     }
 
+    /**
+     * @param Token $token
+     * @return User
+     *
+     * @codeCoverageIgnore
+     */
     public function addToken(Token $token): self
     {
         if (!$this->tokens->contains($token)) {
@@ -254,6 +261,12 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @param Token $token
+     * @return User
+     *
+     * @codeCoverageIgnore
+     */
     public function removeToken(Token $token): self
     {
         if ($this->tokens->contains($token)) {

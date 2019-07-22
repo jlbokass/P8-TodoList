@@ -27,16 +27,27 @@ class SecurityContollerTest extends WebTestCase
     public function testPageLogin()
     {
         $this->logIn();
-        $crawler = $this->client->request('GET', 'login');
+        $crawler = $this->client->request('GET', '/login');
 
         self::assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
     }
 
-    public function logOutUser()
+    public function testLogOutUser()
     {
         $this->client->request('GET', '/logout');
 
+        $crawler = $this->client->followRedirect();
+
+        self::assertResponseIsSuccessful();
+        self::assertSelectorTextContains('h1', 'BIENVENUE SUR TODO-LIST');
         self::assertSame(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
+    }
+
+    public function testPageLogoutIsSuccessful()
+    {
+        $client = static::createClient();
+        $client->request('GET', '/logout');
+        $this->assertEquals(302, $client->getResponse()->getStatusCode());
     }
 
     public function testCorrectLogin()
@@ -95,5 +106,10 @@ class SecurityContollerTest extends WebTestCase
         $session->save();
         $cookie = new Cookie($session->getName(), $session->getId());
         $this->client->getCookieJar()->set($cookie);
+    }
+
+    public function logout()
+    {
+
     }
 }
