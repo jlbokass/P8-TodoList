@@ -12,7 +12,7 @@ class TaskVoter extends Voter
 {
     protected function supports($attribute, $subject)
     {
-        return in_array($attribute, ['EDIT', 'DELETE', 'TOGGLE'])
+        return in_array($attribute, ['LIST','EDIT', 'DELETE', 'TOGGLE'])
             && $subject instanceof Task;
     }
 
@@ -25,12 +25,14 @@ class TaskVoter extends Voter
             return false;
         }
 
-        if ($user->isAdmin()) {
-            return true;
-        }
-
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
+            case 'LIST':
+                if ($task->getUser() === $user) {
+                    return true;
+                }
+                break;
+
             case 'EDIT':
                 if ($task->getUser() === $user) {
                     return true;

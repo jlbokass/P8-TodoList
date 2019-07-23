@@ -69,7 +69,7 @@ class Task
     private $updatedAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="tasks", cascade={"remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="tasks")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
@@ -161,10 +161,5 @@ class Task
         $this->user = $user;
 
         return $this;
-    }
-
-    public function __toString()
-    {
-        return $this->name;
     }
 }

@@ -10,16 +10,6 @@ class UserFixture extends BaseFixture
 {
     private $encoder;
 
-    private static $username = [
-        'jlbokass',
-        'john'
-        ];
-
-    private static $email = [
-        'test1@gmail.com',
-        'test2@gmail.com'
-    ];
-
     public function __construct(UserPasswordEncoderInterface $encoder)
     {
         $this->encoder = $encoder;
@@ -32,10 +22,6 @@ class UserFixture extends BaseFixture
             $user->setPassword($this->encoder->encodePassword($user, 'test123456'));
             $user->setRoles(['ROLE_USER']);
             $user->setUsername($this->faker->unique()->userName);
-
-            if($this->faker->boolean(40)) {
-                $user->setIsEnable(true);
-            }
         });
 
         $manager->flush();
