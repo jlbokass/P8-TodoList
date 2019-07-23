@@ -4,21 +4,9 @@ php:
   - '7.2'
   - '7.3'
 
-install:
-  - composer install
-
-before_script:
-  - bin/console doctrine:database:create
-  - bin/console doctrine:schema:create
-  - bin/console doctrine:fixtures:load -n
-
 script:
-  - php bin/console doctrine:database:create
-  - php bin/console doctrine:schema:create
+  - composer install
   - vendor/bin/phpunit
-
-services:
-  - mysql
 
 
 
