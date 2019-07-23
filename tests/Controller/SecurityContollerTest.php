@@ -2,6 +2,7 @@
 
 namespace App\Tests;
 
+use App\Controller\SecurityController;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\BrowserKit\Cookie;
@@ -10,7 +11,6 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 /**
  * @internal
- * @coversNothing
  */
 class SecurityContollerTest extends WebTestCase
 {
@@ -108,8 +108,10 @@ class SecurityContollerTest extends WebTestCase
         $this->client->getCookieJar()->set($cookie);
     }
 
-    public function logout()
+    public function testLogout()
     {
-
+        $chek = new SecurityController();
+        $check = $chek->logout();
+        self::assertNull( $check );
     }
 }

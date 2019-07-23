@@ -64,15 +64,6 @@ class UserTest extends TestCase
         $this->assertSame($date, $this->user->getUpdatedAt());
     }
 
-    public function testSettingIsEnable()
-    {
-        $this->user->getIsEnable();
-        $this->assertFalse(false);
-
-        $this->user->setIsEnable(true);
-        $this->assertTrue(true);
-    }
-
     public function testAddingAndRemovedTask()
     {
         $task = new Task();

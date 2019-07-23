@@ -48,15 +48,4 @@ class DefaultControllerTest extends WebTestCase
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
         $this->assertSame('BIENVENUE SUR TODO-LIST', $crawler->filter('h1')->text());
     }
-
-    public function clickOnLinkConnexion()
-    {
-        $crawler = $this->client->request('GET', '/');
-        $link = $crawler
-            ->filter('a:contains("Connexion")')
-            ->link()
-            ;
-
-        $crawler->click($link);
-    }
 }

@@ -106,6 +106,7 @@ class TaskController extends AbstractController
      *
      * @param Task $task
      * @param EntityManagerInterface $manager
+     *
      * @return Response
      */
     public function toggleTask(Task $task, EntityManagerInterface $manager): Response
@@ -129,19 +130,32 @@ class TaskController extends AbstractController
      *
      * @param Task $task
      * @param EntityManagerInterface $manager
+     * @param Request $request
      * @return Response
      */
-    public function delete(Task $task, EntityManagerInterface $manager): Response
+    public function delete(Task $task, EntityManagerInterface $manager, Request $request): Response
     {
         $this->denyAccessUnlessGranted('DELETE', $task);
 
-        $manager->remove($task);
-        $manager->flush();
+        $form = $this->createForm(TaskType::class, $task);
 
-        $this->addFlash(
-            'success',
-            'La tâche  à bien été supprimée. ');
+        $form->handleRequest($request);
 
-        return $this->redirectToRoute('task_list');
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $manager->remove($task);
+            $manager->flush();
+
+            $this->addFlash(
+                'success',
+                'La tâche à bien été supprimé. '
+            );
+
+            return $this->redirectToRoute('task_list');
+        }
+
+        return $this->render('task/delete.html.twig', [
+            'taskForm' => $form->createView()
+        ]);
     }
 }

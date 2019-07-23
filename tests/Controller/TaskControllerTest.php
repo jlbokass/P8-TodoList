@@ -6,11 +6,9 @@ use App\Entity\Task;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @internal
- * @coversNothing
  */
 class TaskControllerTest extends WebTestCase
 {
@@ -66,10 +64,6 @@ class TaskControllerTest extends WebTestCase
 
     public function testPageIsUp()
     {
-        $client = static::createClient([], [
-            'PHP_AUTH_USER' => 'j_dabok@me.com',
-            'PHP_AUTH_PW' => 'Dabok@1977',
-        ]);
         $crawler = $this->client->request('GET', '/tasks');
         $this->assertGreaterThanOrEqual(
             1,
@@ -80,17 +74,10 @@ class TaskControllerTest extends WebTestCase
 
     public function testNumberOfTaskOnPage()
     {
-        $client = static::createClient([], [
-            'PHP_AUTH_USER' => 'j_dabok@me.com',
-            'PHP_AUTH_PW' => 'Dabok@1977',
-        ]);
         $crawler = $this->client->request('GET', '/tasks');
 
-        $this->assertCount(4, $crawler->filter('div.card'));
-        $this->assertGreaterThan(
-            0,
-            $crawler->filter( 'html:contains("Vous avez 4 tâches.")' )->count()
-        );
+        $this->assertCount(3, $crawler->filter('div.card'));
+        $this->assertSame('Liste des tâches', $crawler->filter( 'h1')->text());
     }
 
     public function testCreateNewTask()
@@ -114,7 +101,7 @@ class TaskControllerTest extends WebTestCase
 
     public function testEditTask()
     {
-        $crawler = $this->client->request('GET', '/task/54/edit');
+        $crawler = $this->client->request('GET', '/task/38/edit');
         $form = $crawler->selectButton('Modifiez')->form([
             'task[name]' => 'Edit from unit test',
         ]);
@@ -123,16 +110,30 @@ class TaskControllerTest extends WebTestCase
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
 
         /** @var Task $task */
-        $task = $this->entityManager->getRepository(Task::class)->find(54);
+        $task = $this->entityManager->getRepository(Task::class)->find(38);
         $this->assertSame('Edit from unit test', $task->getName());
+    }
+
+    public function testToggleTask()
+    {
+        $crawler = $this->client->request('GET', '/task/39/toggle');
+
+        $this->assertSame(302, $this->client->getResponse()->getStatusCode());
+
+        /** @var Task $task */
+        $task = $this->entityManager->getRepository(Task::class)->find(39);
+        $this->assertEquals(true, $task->getIsDone());
     }
 
     public function testDeleteTask()
     {
-        $crawler = $this->client->request('GET', '/task/50/delete');
+        $crawler = $this->client->request('GET', '/task/38/delete');
+        $form = $crawler->selectButton('Supprimer')->form();
+
+        $this->client->submit($form);
 
         /** @var Task $task */
-        $task = $this->entityManager->getRepository(Task::class)->find(50);
+        $task = $this->entityManager->getRepository(Task::class)->find(38);
         $this->assertNull($task);
     }
 }

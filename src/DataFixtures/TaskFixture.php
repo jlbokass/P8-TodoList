@@ -3,11 +3,9 @@
 namespace App\DataFixtures;
 
 use App\Entity\Task;
-use App\Entity\User;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class TaskFixture extends BaseFixture implements DependentFixtureInterface
+class TaskFixture extends BaseFixture
 {
     protected function loadData(ObjectManager $manager)
     {
@@ -20,21 +18,8 @@ class TaskFixture extends BaseFixture implements DependentFixtureInterface
                 $task->setIsDone(true);
             }
 
-            /** @var User[] $user */
-            $user = $this->getRandomReferences(User::class, $this->faker->numberBetween(1, 20));
-
-            foreach ($user as $user) {
-                $task->setUser($user);
-            }
         });
 
         $manager->flush();
-    }
-
-    public function getDependencies()
-    {
-        return [
-            UserFixture::class,
-        ];
     }
 }
