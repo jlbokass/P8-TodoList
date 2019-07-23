@@ -5,12 +5,7 @@ php:
 
 services:
   - mysql
-
-before_install:
-  - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('dabok77') where User='jlbokass'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
-  - sudo mysql_upgrade -u root -pnew_password
-  - sudo service mysql restart
-
+  -
 install:
   - composer install
   - php bin/console doctrine:database:create
