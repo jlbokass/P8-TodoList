@@ -91,16 +91,6 @@ class User implements UserInterface
     private $updatedAt;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isEnable = false;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Token", mappedBy="user", orphanRemoval=true)
-     */
-    private $tokens;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="user", orphanRemoval=true, cascade={"remove"}, fetch="EXTRA_LAZY")
      * @ORM\OrderBy({"createdAt" = "DESC"})
      */
@@ -111,7 +101,6 @@ class User implements UserInterface
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
         $this->roles = ["ROLE_USER"];
-        $this->tokens = new ArrayCollection();
         $this->tasks = new ArrayCollection();
     }
 
@@ -219,63 +208,6 @@ class User implements UserInterface
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    public function getIsEnable(): ?bool
-    {
-        return $this->isEnable;
-    }
-
-    public function setIsEnable(bool $isEnable): self
-    {
-        $this->isEnable = $isEnable;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Token[]
-     *
-     * @codeCoverageIgnore
-     */
-    public function getTokens(): Collection
-    {
-        return $this->tokens;
-    }
-
-    /**
-     * @param Token $token
-     * @return User
-     *
-     * @codeCoverageIgnore
-     */
-    public function addToken(Token $token): self
-    {
-        if (!$this->tokens->contains($token)) {
-            $this->tokens[] = $token;
-            $token->setUser($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param Token $token
-     * @return User
-     *
-     * @codeCoverageIgnore
-     */
-    public function removeToken(Token $token): self
-    {
-        if ($this->tokens->contains($token)) {
-            $this->tokens->removeElement($token);
-            // set the owning side to null (unless already changed)
-            if ($token->getUser() === $this) {
-                $token->setUser(null);
-            }
-        }
 
         return $this;
     }

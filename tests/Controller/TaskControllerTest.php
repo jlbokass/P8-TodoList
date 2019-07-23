@@ -86,10 +86,10 @@ class TaskControllerTest extends WebTestCase
         ]);
         $crawler = $this->client->request('GET', '/tasks');
 
-        $this->assertCount(4, $crawler->filter('div.card'));
+        $this->assertCount(3, $crawler->filter('div.card'));
         $this->assertGreaterThan(
             0,
-            $crawler->filter( 'html:contains("Vous avez 4 tâches.")' )->count()
+            $crawler->filter( 'html:contains("Vous avez 3 tâches.")' )->count()
         );
     }
 
@@ -114,7 +114,7 @@ class TaskControllerTest extends WebTestCase
 
     public function testEditTask()
     {
-        $crawler = $this->client->request('GET', '/task/54/edit');
+        $crawler = $this->client->request('GET', '/task/20/edit');
         $form = $crawler->selectButton('Modifiez')->form([
             'task[name]' => 'Edit from unit test',
         ]);
@@ -123,7 +123,7 @@ class TaskControllerTest extends WebTestCase
         $this->assertSame(302, $this->client->getResponse()->getStatusCode());
 
         /** @var Task $task */
-        $task = $this->entityManager->getRepository(Task::class)->find(54);
+        $task = $this->entityManager->getRepository(Task::class)->find(20);
         $this->assertSame('Edit from unit test', $task->getName());
     }
 

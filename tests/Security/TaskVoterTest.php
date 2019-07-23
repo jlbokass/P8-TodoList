@@ -15,7 +15,7 @@ class TaskVoterTest extends TestCase
      * @dataProvider voterProvider
      *
      */
-    public function testCarVoter($user, $expected)
+    public function testTaskVoter($user, $expected)
     {
         $voter = new TaskVoter();
         $task = new Task();

@@ -3,12 +3,12 @@
 namespace App\Tests;
 
 use App\Entity\Task;
-use App\Entity\Token;
 use App\Entity\User;
 use PHPUnit\Framework\TestCase;
 
 class UserTest extends TestCase
 {
+    /** @var User */
     private $user;
 
     public function setUp(): void
@@ -62,15 +62,6 @@ class UserTest extends TestCase
         $date = new \DateTime();
         $this->user->setUpdatedAt($date);
         $this->assertSame($date, $this->user->getUpdatedAt());
-    }
-
-    public function testSettingIsEnable()
-    {
-        $this->user->getIsEnable();
-        $this->assertFalse(false);
-
-        $this->user->setIsEnable(true);
-        $this->assertTrue(true);
     }
 
     public function testAddingAndRemovedTask()

@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class TaskTest extends TestCase
 {
+    /** @var Task */
     private $task;
 
     public function setUp(): void
