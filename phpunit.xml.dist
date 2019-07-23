@@ -27,7 +27,7 @@
             <exclude>
                 <directory>src/DataFixtures</directory>
                 <directory>src/Repository</directory>
-                <directory>src/Security</directory>
+                <directory>src/Security/LoginFormAuthenticator.php</directory>
                 <directory>src/Kernel.php</directory>
             </exclude>
         </whitelist>

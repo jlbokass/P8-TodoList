@@ -107,7 +107,7 @@ class ProfileController extends AbstractController
         }
 
         return $this->render('profile/requestDeleteProfile.html.twig', [
-            'confirmPassword' => $deleteUserForm->createView(),
+            'confirmPasswordToDeleteProfile' => $deleteUserForm->createView(),
         ]);
     }
 
