@@ -20,35 +20,25 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class TaskController extends AbstractController
 {
-    public $manager;
-
-    public function __construct(EntityManagerInterface $manager = null)
-    {
-        $this->manager = $manager;
-    }
-
     /**
      * @Route("/tasks", name="task_list", methods={"GET"})
      *
-     * @param TaskRepository $taskRepository
-     *
      * @return Response
      */
-    public function index(TaskRepository $taskRepository): Response
+    public function index(): Response
     {
-
         return $this->render('task/index.html.twig', [
-            'tasks' => $taskRepository->findAll(),
+            'tasks' => $this->getDoctrine()->getRepository(Task::class)->findAll(),
         ]);
     }
 
     /**
      * @Route("/tasks/create", name="task_create")
      * @param Request $request
-     *
+     * @param EntityManagerInterface $manager
      * @return Response
      */
-    public function create(Request $request): Response
+    public function create(Request $request, EntityManagerInterface $manager): Response
     {
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
@@ -61,12 +51,12 @@ class TaskController extends AbstractController
 
             $task->setUser($user);
 
-            $this->manager->persist($task);
-            $this->manager->flush();
+            $manager->persist($task);
+            $manager->flush();
 
             $this->addFlash(
                 'success',
-                'La tâche à bien été ajouté. '
+                'La tâche à bien été ajoutée. '
             );
 
             return $this->redirectToRoute('task_list');
@@ -83,10 +73,10 @@ class TaskController extends AbstractController
      * @Route("/task/{id}/edit", name="task_edit")
      * @param Task $task
      * @param Request $request
-     *
+     * @param EntityManagerInterface $manager
      * @return Response
      */
-    public function edit(Task $task, Request $request): Response
+    public function edit(Task $task, Request $request, EntityManagerInterface $manager): Response
     {
         $this->denyAccessUnlessGranted('EDIT', $task);
 
@@ -96,7 +86,7 @@ class TaskController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $this->manager->flush();
+            $manager->flush();
 
             $this->addFlash(
                 'success',
@@ -115,15 +105,16 @@ class TaskController extends AbstractController
      * @Route("/task/{id}/toggle", name="task_toggle")
      *
      * @param Task $task
+     * @param EntityManagerInterface $manager
      *
      * @return Response
      */
-    public function toggleTask(Task $task): Response
+    public function toggleTask(Task $task, EntityManagerInterface $manager): Response
     {
         $this->denyAccessUnlessGranted('TOGGLE', $task);
 
         $task->toggle(!$task->getIsDone());
-        $this->manager->flush();
+        $manager->flush();
 
         $name = $task->getName();
 
@@ -138,20 +129,33 @@ class TaskController extends AbstractController
      * @Route("/task/{id}/delete", name="task_delete")
      *
      * @param Task $task
-     *
+     * @param EntityManagerInterface $manager
+     * @param Request $request
      * @return Response
      */
-    public function delete(Task $task): Response
+    public function delete(Task $task, EntityManagerInterface $manager, Request $request): Response
     {
         $this->denyAccessUnlessGranted('DELETE', $task);
 
-        $this->manager->remove($task);
-        $this->manager->flush();
+        $form = $this->createForm(TaskType::class, $task);
 
-        $this->addFlash(
-            'success',
-            'La tâche  à bien été supprimée. ');
+        $form->handleRequest($request);
 
-        return $this->redirectToRoute('task_list');
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $manager->remove($task);
+            $manager->flush();
+
+            $this->addFlash(
+                'success',
+                'La tâche à bien été supprimé. '
+            );
+
+            return $this->redirectToRoute('task_list');
+        }
+
+        return $this->render('task/delete.html.twig', [
+            'taskForm' => $form->createView()
+        ]);
     }
 }

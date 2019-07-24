@@ -18,7 +18,7 @@
         </div>
        <div class="text-center">
            <h1>Liste des tâches</h1>
-           <p>Vous avez <strong>{{ tasks | length }} tâches</strong>.</p>
+           <p>Vous avez <strong>{{ app.user.tasks | length }} tâches</strong>.</p>
        </div>
         <div class="mb-3">
             <a href="{{ path('task_create') }}" class="btn btn-outline-dark">
@@ -26,53 +26,26 @@
             </a>
         </div>
         <div class="row">
-            {% if tasks | length %}
+            {% if app.user.tasks | length %}
                 {% for task in tasks %}
+                    {% if is_granted('LIST', task) %}
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                {{ task.name }}
-                                <button class="btn btn-sm btn-outline-danger float-right" data-toggle="modal" data-target="#myModal">
+                                    {{ task.name }}
+                                <a href="{{ path('task_delete', {'id': task.id}) }}" class="btn btn-sm btn-outline-danger float-right">
                                     <i class="fas fa-trash-alt"></i>
-                                </button>
-                                <!-- Modal -->
-                                <div class="modal" id="myModal">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-
-                                            <!-- Modal Header -->
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">Supprimer la tâche: </h4>
-                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            </div>
-
-                                            <!-- Modal body -->
-                                            <div class="modal-body">
-                                                <p>{{ task.name }}</p>
-                                            </div>
-
-                                            <!-- Modal footer -->
-                                            <div class="modal-footer">
-                                                <button type="reset" class="btn btn-danger" onclick="javascritp:location.href='{{ path('task_delete', {id : task.id}) }}'" data-dismiss="modal">Delete</button>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--/ end of modal -->
-
-                                {% if not task.isDone %}
-                                    <a href="{{ path('task_edit', {'id': task.id}) }}" class="btn btn-sm btn-outline-warning float-right mr-1">
-                                        <i class="fas fa-pencil-alt"></i>
-                                    </a>
-                                {% endif %}
+                                </a>
+                                        <a href="{{ path('task_edit', {'id': task.id}) }}" class="btn btn-sm btn-outline-warning float-right mr-1">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </a>
                                 {% if task.isDone %}
-                                    <button class="btn btn-sm btn-success ml-2">
-                                        <i class="fas fa-check-circle"></i>
-                                    </button>
+                                    <a href="{{ path('task_toggle', {'id': task.id}) }}" class="btn btn-sm btn-success float-right mr-1">
+                                        <i class="fas fa-times-circle"></i>
+                                    </a>
                                 {% else %}
                                     <a href="{{ path('task_toggle', {'id': task.id}) }}" class="btn btn-sm btn-outline-success float-right mr-1">
-                                        Done
+                                        <i class="fas fa-check-circle"></i>
                                     </a>
                                 {% endif %}
                             </div>
@@ -84,6 +57,7 @@
                         </div>
                         <br>
                     </div>
+                    {% endif %}
                 {% endfor %}
             {% else %}
                 <p>Vous n'avez pas encore de tâches. </p>

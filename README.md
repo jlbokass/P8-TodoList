@@ -17,8 +17,24 @@ This work is done as part of my PHP web developer training with Openclassroom - 
 1. Configure your web server to have the **public** folder as the web root.
 1. Open [env.dist](/env.dist) and enter your database configuration data.
 
-## Errors
+<h4>2 Follow thoses steps :</h4>
+<pre><code>composer install</pre></code>  
 
-If the `SHOW_ERRORS` configuration setting is set to `DEV`, full error detail will be shown in the browser if an error or exception occurs. If it's set to `PROD`, a generic message will be shown depending on the error.
+<h4>4 - Create database :</h4>
+<pre><code>php bin/console doctrine:database:create</pre></code>
 
+<h4>5 - Create schema :</h4>
+<pre><code>php bin/console doctrine:schema:update --force</pre></code>
+
+<h4>6 - Load fixtures :</h4>
+<pre><code>php bin/console doctrine:fixtures:load</pre></code>
+
+<h4>7 - Run the server :</h4>
+<pre><code>PHP -S localhost:8080</pre></code>
+
+<h4> Code coverage :</h4>
+<pre><code>http://localhost/test-coverage/index.html</pre></code>
+
+<h4> Execute phpunit test :</h4>
+<pre><code>"./vendor/bin/phpunit</pre></code>
 ---
