@@ -29,9 +29,6 @@ This work is done as part of my PHP web developer training with Openclassroom - 
 <h4>6 - Load fixtures :</h4>
 <pre><code>php bin/console doctrine:fixtures:load</pre></code>
 
-<h4>7 - Run the server :</h4>
-<pre><code>PHP -S localhost:8080</pre></code>
-
 <h4> Code coverage :</h4>
 <pre><code>http://localhost/test-coverage/index.html</pre></code>
 
